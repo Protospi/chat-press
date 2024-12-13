@@ -34,24 +34,25 @@ function App() {
     <div className="min-h-screen bg-[#eae6df] flex">
       {/* Left Column - Controls */}
       <div className="w-1/2 p-8 flex flex-col gap-8">
-        <h1 className="text-3xl font-bold text-gray-800">Apresentação de Conversas SmartTalks</h1>
+        <img 
+          src="/smarttalks_logo.png" 
+          alt="SmartTalks Logo" 
+          className="h-12 object-contain self-start"
+        />
         
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-gray-800">Configurações do Chat</h2>
-          <div className="space-y-4">
-            <div className="flex gap-8 items-start">
-              <div className="flex-1">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Nome do Assistente</label>
-                <NameInput
-                  value={assistantName}
-                  onChange={setAssistantName}
-                  placeholder="Nome do Assistente"
-                />
-              </div>
-              <div className="w-32">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Avatar</label>
-                <AvatarInput onAvatarChange={setAvatarUrl} />
-              </div>
+          <div>
+            <div className="flex justify-between mb-2">
+              <label className="text-sm font-medium text-gray-700">Nome do Assistente</label>
+            </div>
+            <div className="flex gap-1">
+              <NameInput
+                value={assistantName}
+                onChange={setAssistantName}
+                placeholder="Nome do Assistente"
+              />
+              <AvatarInput onAvatarChange={setAvatarUrl} />
             </div>
           </div>
         </div>

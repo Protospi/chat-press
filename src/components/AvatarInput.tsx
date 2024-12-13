@@ -19,10 +19,10 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({ onAvatarChange }) => {
   return (
     <button
       onClick={() => inputRef.current?.click()}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 hover:border-green-500 focus:outline-none transition-colors"
+      className="h-10 px-3 rounded-lg bg-green-500 hover:bg-green-600 text-white focus:outline-none transition-colors flex items-center gap-1"
     >
-      <ImagePlus size={20} />
-      <span>Alterar Avatar</span>
+      <ImagePlus size={16} />
+      <span className="text-sm">Avatar</span>
       <input
         ref={inputRef}
         type="file"

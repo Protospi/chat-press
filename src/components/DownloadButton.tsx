@@ -27,7 +27,7 @@ export const DownloadButton: React.FC<DownloadButtonProps> = ({ phoneRef }) => {
       className="flex items-center gap-2 px-4 py-2 bg-[#00A884] text-white rounded-lg hover:bg-[#008f6f] transition-colors"
     >
       <Download size={20} />
-      <span>Baixar Conversa</span>
+      <span>Baixar Imagem</span>
     </button>
   );
 };
