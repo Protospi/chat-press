@@ -66,8 +66,10 @@ function App() {
         setMessages(prev => [...prev, messages[i]]);
         await delay(2000);
         
-        // Capture frame
-        const canvas = await html2canvas(phoneRef.current!);
+        // Capture frame with transparent background
+        const canvas = await html2canvas(phoneRef.current!, {
+          backgroundColor: null // This makes the background transparent
+        });
         frames.push(canvas.toDataURL());
 
         // Scroll if needed
@@ -76,12 +78,13 @@ function App() {
         }
       }
 
-      // Create GIF
+      // Create GIF with transparent background
       (gifshot as any).createGIF({
         images: frames,
         gifWidth: 420,
         gifHeight: 780,
         interval: 2,
+        transparent: true // Enable transparency in the GIF
       }, function(obj: { error: boolean; image: string }) {
         if (!obj.error) {
           const link = document.createElement('a');
