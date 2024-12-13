@@ -23,7 +23,7 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({ message, isUser }) => {
           isUser
             ? 'bg-[#DCF8C6] rounded-tr-none'
             : 'bg-white rounded-tl-none'
-        } shadow`}
+        } shadow-[0_2px_4px_rgba(0,0,0,0.3)]`}
       >
         <p className="text-[#303030] text-sm">{formatMessage(message)}</p>
       </div>
