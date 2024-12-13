@@ -19,7 +19,7 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({ onAvatarChange }) => {
   return (
     <button
       onClick={() => inputRef.current?.click()}
-      className="h-10 px-3 rounded-lg bg-green-500 hover:bg-green-600 text-white focus:outline-none transition-colors flex items-center gap-1"
+      className="h-10 px-3 rounded-lg bg-[#6D5BEE] hover:bg-[#5846eb] text-white focus:outline-none transition-colors flex items-center gap-1"
     >
       <ImagePlus size={16} />
       <span className="text-sm">Avatar</span>

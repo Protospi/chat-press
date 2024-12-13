@@ -42,7 +42,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSend, placeholder,
         />
         <button
           type="submit"
-          className="p-2 rounded-lg bg-[#00A884] text-white hover:bg-[#008f6f] transition-colors"
+          className="p-2 rounded-lg bg-[#6D5BEE] text-white hover:bg-[#5646db] transition-colors"
         >
           <Send size={20} />
         </button>
