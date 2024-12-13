@@ -55,36 +55,38 @@ function App() {
       const frames: string[] = [];
       const messagesContainer = messagesContainerRef.current;
       
-      // Reset scroll position
       if (messagesContainer) {
         messagesContainer.scrollTop = 0;
       }
 
-      // Clear messages and add them one by one
       setMessages([]);
       for (let i = 0; i < messages.length; i++) {
         setMessages(prev => [...prev, messages[i]]);
         await delay(2000);
         
-        // Capture frame with transparent background
         const canvas = await html2canvas(phoneRef.current!, {
-          backgroundColor: null // This makes the background transparent
+          backgroundColor: null,
+          scale: 2,
+          logging: false,
+          useCORS: true
         });
-        frames.push(canvas.toDataURL());
+        frames.push(canvas.toDataURL('image/png', 1.0));
 
-        // Scroll if needed
         if (messagesContainer) {
           scrollToBottom(messagesContainer);
         }
       }
 
-      // Create GIF with transparent background
       (gifshot as any).createGIF({
         images: frames,
-        gifWidth: 420,
-        gifHeight: 780,
-        interval: 2,
-        transparent: true // Enable transparency in the GIF
+        gifWidth: 380 * 4,
+        gifHeight: 780 * 4,
+        interval: 1.5,
+        transparent: true,
+        quality: 20,
+        numWorkers: 2,
+        frameDuration: 1.5,
+        sampleInterval: 10
       }, function(obj: { error: boolean; image: string }) {
         if (!obj.error) {
           const link = document.createElement('a');
