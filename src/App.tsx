@@ -109,11 +109,11 @@ function App() {
         <img 
           src="/smarttalks_logo.png" 
           alt="SmartTalks Logo" 
-          className="h-12 object-contain self-start"
+          className="h-8 object-contain self-start"
         />
-        
+        <h1 className="text-2xl font-semibold text-gray-800">Vizualizador de Conversas</h1>
         <div className="space-y-6">
-          <h2 className="text-2xl font-semibold text-gray-800">Configurações do Chat</h2>
+          <h3 className="text-xl font-semibold text-gray-800">Configurações do Chat</h3>
           <div>
             <div className="flex justify-between mb-2">
               <label className="text-sm font-medium text-gray-700">Nome do Assistente</label>
@@ -130,7 +130,7 @@ function App() {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-800">Controle de Mensagens</h2>
+          <h3 className="text-xl font-semibold text-gray-800">Controle de Mensagens</h3>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Assistente</label>
@@ -144,7 +144,7 @@ function App() {
               <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Usuário</label>
               <MessageInput
                 onSend={handleUserMessage}
-                placeholder="Digite uma mensagem..."
+                placeholder="Digite como usuário..."
                 align="left"
               />
             </div>
