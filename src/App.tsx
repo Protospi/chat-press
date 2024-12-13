@@ -5,7 +5,9 @@ import { NameInput } from './components/NameInput';
 import { ChatHeader } from './components/ChatHeader';
 import { AvatarInput } from './components/AvatarInput';
 import { DownloadButton } from './components/DownloadButton';
-import { Trash2 } from 'lucide-react';
+import { Trash2, Download, Film } from 'lucide-react';
+import * as gifshot from 'gifshot';
+import html2canvas from 'html2canvas';
 
 interface Message {
   text: string;
@@ -17,6 +19,8 @@ function App() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const phoneRef = useRef<HTMLDivElement>(null);
+  const [isGeneratingGif, setIsGeneratingGif] = useState(false);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const handleAssistantMessage = (text: string) => {
     setMessages([...messages, { text, isUser: false }]);
@@ -28,6 +32,69 @@ function App() {
 
   const handleCleanChat = () => {
     setMessages([]);
+  };
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const scrollToBottom = (container: HTMLDivElement) => {
+    const scrollHeight = container.scrollHeight;
+    const currentScroll = container.scrollTop;
+    const targetScroll = Math.min(currentScroll + container.clientHeight / 2, scrollHeight - container.clientHeight);
+    
+    container.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+  };
+
+  const handleCreateGif = async () => {
+    if (!phoneRef.current || isGeneratingGif) return;
+    setIsGeneratingGif(true);
+
+    try {
+      const frames: string[] = [];
+      const messagesContainer = messagesContainerRef.current;
+      
+      // Reset scroll position
+      if (messagesContainer) {
+        messagesContainer.scrollTop = 0;
+      }
+
+      // Clear messages and add them one by one
+      setMessages([]);
+      for (let i = 0; i < messages.length; i++) {
+        setMessages(prev => [...prev, messages[i]]);
+        await delay(2000);
+        
+        // Capture frame
+        const canvas = await html2canvas(phoneRef.current!);
+        frames.push(canvas.toDataURL());
+
+        // Scroll if needed
+        if (messagesContainer) {
+          scrollToBottom(messagesContainer);
+        }
+      }
+
+      // Create GIF
+      (gifshot as any).createGIF({
+        images: frames,
+        gifWidth: 420,
+        gifHeight: 780,
+        interval: 2,
+      }, function(obj: { error: boolean; image: string }) {
+        if (!obj.error) {
+          const link = document.createElement('a');
+          link.href = obj.image;
+          link.download = 'chat-animation.gif';
+          link.click();
+        }
+      });
+    } catch (error) {
+      console.error('Error generating GIF:', error);
+    } finally {
+      setIsGeneratingGif(false);
+    }
   };
 
   return (
@@ -82,6 +149,14 @@ function App() {
         <div className="flex gap-4">
           <DownloadButton phoneRef={phoneRef} />
           <button
+            onClick={handleCreateGif}
+            disabled={isGeneratingGif}
+            className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <Film size={24} />
+            {isGeneratingGif ? 'Gerando...' : 'Baixar GIF'}
+          </button>
+          <button
             onClick={handleCleanChat}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
           >
@@ -99,7 +174,10 @@ function App() {
           <ChatHeader avatarUrl={avatarUrl} name={assistantName} />
 
           {/* Messages Container */}
-          <div className="h-[calc(100%-60px)] overflow-y-auto p-4 bg-[#e5ddd5] max-w-full">
+          <div 
+            ref={messagesContainerRef}
+            className="h-[calc(100%-60px)] overflow-y-auto p-4 bg-[#e5ddd5] max-w-full"
+          >
             <div className="max-w-[380px] mx-auto">
               {messages.map((msg, index) => (
                 <ChatBubble
