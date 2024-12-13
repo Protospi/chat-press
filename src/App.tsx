@@ -99,7 +99,7 @@ function App() {
           <ChatHeader avatarUrl={avatarUrl} name={assistantName} />
 
           {/* Messages Container */}
-          <div className="h-[calc(100%-120px)] overflow-y-auto p-4 bg-[#e5ddd5] max-w-full">
+          <div className="h-[calc(100%-60px)] overflow-y-auto p-4 bg-[#e5ddd5] max-w-full">
             <div className="max-w-[380px] mx-auto">
               {messages.map((msg, index) => (
                 <ChatBubble
