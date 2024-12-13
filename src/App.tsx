@@ -172,16 +172,16 @@ function App() {
 
       {/* Right Column - Phone Preview */}
       <div className="w-1/2 p-8 flex items-center justify-center">
-        <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-black rounded-[55px] shadow-xl overflow-hidden border-8 border-black">
+        <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-[#151515] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#151515]">
           {/* Updated iPhone Notch - taller height */}
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-black rounded-[20px] z-20"></div>
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
           
           <ChatHeader avatarUrl={avatarUrl} name={assistantName} />
 
-          {/* Messages Container - adjusted height calculation */}
+          {/* Messages Container - reduced height to create more black space above input */}
           <div 
             ref={messagesContainerRef}
-            className="h-[calc(100%-130px)] overflow-y-auto p-4 bg-[#e5ddd5]"
+            className="h-[calc(100%-160px)] overflow-y-auto p-4 bg-[#e5ddd5]"
           >
             <div className="max-w-[380px] mx-auto">
               {messages.map((msg, index) => (
@@ -194,8 +194,8 @@ function App() {
             </div>
           </div>
 
-          {/* Static Input Bar - reduced padding and height */}
-          <div className="absolute bottom-[25px] left-0 right-0 h-[50px] bg-black px-2 py-1 flex items-center gap-1">
+          {/* Static Input Bar - adjusted bottom position */}
+          <div className="absolute bottom-[12px] left-0 right-0 h-[50px] bg-[#151515] px-2 py-1 flex items-center gap-1">
             <button className="p-2 text-gray-400">
               <Plus size={24} />
             </button>
@@ -210,8 +210,8 @@ function App() {
             </button>
           </div>
 
-          {/* iPhone Home Indicator - slightly reduced height */}
-          <div className="absolute bottom-0 left-0 right-0 h-[25px] bg-black flex items-center justify-center">
+          {/* iPhone Home Indicator - adjusted height */}
+          <div className="absolute bottom-0 left-0 right-0 h-[12px] bg-[#151515] flex items-center justify-center">
             <div className="w-[134px] h-[5px] bg-gray-200 rounded-full"></div>
           </div>
         </div>
