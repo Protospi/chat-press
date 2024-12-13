@@ -65,7 +65,7 @@ function App() {
         await delay(2000);
         
         const canvas = await html2canvas(phoneRef.current!, {
-          backgroundColor: null,
+          backgroundColor: 'rgba(0, 0, 0, 0)', // Explicit transparent background
           scale: 2,
           logging: false,
           useCORS: true
