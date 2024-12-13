@@ -167,7 +167,7 @@ function App() {
 
       {/* Right Column - Phone Preview */}
       <div className="w-1/2 p-8 flex items-center justify-center">
-        <div ref={phoneRef} className="relative w-[420px] h-[780px] bg-black rounded-[55px] shadow-xl overflow-hidden border-8 border-black">
+        <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-black rounded-[55px] shadow-xl overflow-hidden border-8 border-black">
           {/* iPhone Notch */}
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[150px] h-[30px] bg-black rounded-b-[20px] z-20"></div>
           
@@ -176,7 +176,7 @@ function App() {
           {/* Messages Container */}
           <div 
             ref={messagesContainerRef}
-            className="h-[calc(100%-60px)] overflow-y-auto p-4 bg-[#e5ddd5] max-w-full"
+            className="h-[calc(100%-85px)] overflow-y-auto p-4 bg-[#e5ddd5]"
           >
             <div className="max-w-[380px] mx-auto">
               {messages.map((msg, index) => (
@@ -188,6 +188,9 @@ function App() {
               ))}
             </div>
           </div>
+
+          {/* Bottom Black Rectangle */}
+          <div className="absolute bottom-0 left-0 right-0 h-[25px] bg-black"></div>
         </div>
       </div>
     </div>
