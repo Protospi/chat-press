@@ -173,8 +173,8 @@ function App() {
       {/* Right Column - Phone Preview */}
       <div className="w-1/2 p-8 flex items-center justify-center">
         <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-black rounded-[55px] shadow-xl overflow-hidden border-8 border-black">
-          {/* iPhone Notch */}
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[150px] h-[30px] bg-black rounded-b-[20px] z-20"></div>
+          {/* Updated iPhone Notch - taller height */}
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-black rounded-[20px] z-20"></div>
           
           <ChatHeader avatarUrl={avatarUrl} name={assistantName} />
 
