@@ -5,7 +5,7 @@ import { NameInput } from './components/NameInput';
 import { ChatHeader } from './components/ChatHeader';
 import { AvatarInput } from './components/AvatarInput';
 import { DownloadButton } from './components/DownloadButton';
-import { Trash2, Download, Film } from 'lucide-react';
+import { Trash2, Download, Film, Plus, Camera, Mic } from 'lucide-react';
 import * as gifshot from 'gifshot';
 import html2canvas from 'html2canvas';
 
@@ -178,10 +178,10 @@ function App() {
           
           <ChatHeader avatarUrl={avatarUrl} name={assistantName} />
 
-          {/* Messages Container */}
+          {/* Messages Container - adjusted height calculation */}
           <div 
             ref={messagesContainerRef}
-            className="h-[calc(100%-85px)] overflow-y-auto p-4 bg-[#e5ddd5]"
+            className="h-[calc(100%-130px)] overflow-y-auto p-4 bg-[#e5ddd5]"
           >
             <div className="max-w-[380px] mx-auto">
               {messages.map((msg, index) => (
@@ -194,8 +194,26 @@ function App() {
             </div>
           </div>
 
-          {/* Bottom Black Rectangle */}
-          <div className="absolute bottom-0 left-0 right-0 h-[25px] bg-black"></div>
+          {/* Static Input Bar - reduced padding and height */}
+          <div className="absolute bottom-[25px] left-0 right-0 h-[50px] bg-black px-2 py-1 flex items-center gap-1">
+            <button className="p-2 text-gray-400">
+              <Plus size={24} />
+            </button>
+            <div className="flex-1 bg-[#2a2a2a] rounded-full h-9 px-4 flex items-center">
+              <span className="text-gray-500 text-sm">Mensagem</span>
+            </div>
+            <button className="p-2 text-gray-400">
+              <Camera size={24} />
+            </button>
+            <button className="p-2 text-gray-400">
+              <Mic size={24} />
+            </button>
+          </div>
+
+          {/* iPhone Home Indicator - slightly reduced height */}
+          <div className="absolute bottom-0 left-0 right-0 h-[25px] bg-black flex items-center justify-center">
+            <div className="w-[134px] h-[5px] bg-gray-200 rounded-full"></div>
+          </div>
         </div>
       </div>
     </div>
