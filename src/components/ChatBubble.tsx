@@ -9,7 +9,7 @@ interface ChatBubbleProps {
 export const ChatBubble: React.FC<ChatBubbleProps> = ({ 
   message, 
   isUser, 
-  fontSize = 14
+  fontSize = 15
 }) => {
   const formatMessage = (text: string) => {
     return text.split('\n').map((line, i) => (
@@ -23,7 +23,7 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
       <div
-        className={`max-w-[70%] rounded-lg px-4 py-3 whitespace-pre-wrap ${
+        className={`max-w-[85%] rounded-lg px-4 py-3 whitespace-pre-wrap ${
           isUser
             ? 'bg-[#DCF8C6] rounded-tr-none'
             : 'bg-white rounded-tl-none'
