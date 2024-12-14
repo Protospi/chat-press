@@ -65,15 +65,19 @@ function App() {
       const frames: string[] = [];
       const messagesContainer = messagesContainerRef.current;
       
-      if (messagesContainer) {
-        messagesContainer.scrollTop = 0;
-      }
-
       setMessages([]);
+
       for (let i = 0; i < messages.length; i++) {
         setMessages(prev => [...prev, messages[i]]);
+        
         await delay(2000);
         
+        if (messagesContainer) {
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        await delay(100);
+
         const canvas = await html2canvas(phoneRef.current!, {
           backgroundColor: gifBackground,
           scale: 3,
@@ -81,10 +85,6 @@ function App() {
           useCORS: true
         });
         frames.push(canvas.toDataURL('image/png', 1.0));
-
-        if (messagesContainer) {
-          scrollToBottom(messagesContainer);
-        }
       }
 
       (gifshot as any).createGIF({
