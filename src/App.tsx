@@ -5,7 +5,7 @@ import { NameInput } from './components/NameInput';
 import { ChatHeader } from './components/ChatHeader';
 import { AvatarInput } from './components/AvatarInput';
 import { DownloadButton } from './components/DownloadButton';
-import { Trash2, Download, Film, Plus, Camera, Mic, Palette } from 'lucide-react';
+import { Trash2, Download, Film, Plus, Camera, Mic, Palette, Battery, Signal, Wifi } from 'lucide-react';
 import * as gifshot from 'gifshot';
 import html2canvas from 'html2canvas';
 import { ColorPickerModal } from './components/ColorPickerModal';
@@ -217,8 +217,26 @@ function App() {
       {/* Right Column - Phone Preview */}
       <div className="w-1/2 p-8 flex items-center justify-center">
         <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-[#151515] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#151515]">
-          {/* Updated iPhone Notch - taller height */}
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
+          {/* iPhone Status Bar and Notch */}
+          <div className="relative">
+            {/* Status Bar */}
+            <div className={`absolute ${isGeneratingGif ? 'top-2' : 'top-4'} left-0 right-0 px-6 flex justify-between items-center z-10`}>
+              {/* Time */}
+              <div className="text-white text-[15px] font-medium w-[40px] ml-4">
+                23:00
+              </div>
+              
+              {/* Right Icons */}
+              <div className={`flex items-center gap-2 ${isGeneratingGif ? 'translate-y-2' : 'translate-y-0'} mr-3`}>
+                <Signal size={17} className="text-white fill-white" />
+                <Wifi size={17} className="text-white fill-white" />
+                <Battery size={17} className="text-white fill-white" />
+              </div>
+            </div>
+            
+            {/* Notch */}
+            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
+          </div>
           
           <ChatHeader avatarUrl={avatarUrl} name={assistantName} />
 
