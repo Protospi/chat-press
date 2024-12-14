@@ -24,6 +24,7 @@ function App() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [gifBackground, setGifBackground] = useState('#ffffff');
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
+  const [fontSize, setFontSize] = useState(18);
 
   const handleAssistantMessage = (text: string) => {
     setMessages([...messages, { text, isUser: false }]);
@@ -111,6 +112,10 @@ function App() {
     }
   };
 
+  const handleFontSizeChange = (change: number) => {
+    setFontSize(prev => Math.min(Math.max(prev + change, 12), 24));
+  };
+
   return (
     <div className="min-h-screen bg-[#eae6df] flex">
       {/* Left Column - Controls */}
@@ -139,7 +144,29 @@ function App() {
         </div>
 
         <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-gray-800">Controle de Mensagens</h3>
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-semibold text-gray-800">Controle de Mensagens</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600">Tamanho da Fonte:</span>
+              <div className="flex items-center bg-white rounded-lg border border-gray-300 shadow-sm">
+                <button
+                  onClick={() => handleFontSizeChange(-1)}
+                  className="px-2 py-1 hover:bg-gray-100 border-r border-gray-300"
+                  title="Diminuir fonte"
+                >
+                  ↓
+                </button>
+                <span className="px-2 min-w-[2rem] text-center">{fontSize}</span>
+                <button
+                  onClick={() => handleFontSizeChange(1)}
+                  className="px-2 py-1 hover:bg-gray-100 border-l border-gray-300"
+                  title="Aumentar fonte"
+                >
+                  ↑
+                </button>
+              </div>
+            </div>
+          </div>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Assistente</label>
@@ -206,6 +233,7 @@ function App() {
                   key={index}
                   message={msg.text}
                   isUser={msg.isUser}
+                  fontSize={fontSize}
                 />
               ))}
             </div>

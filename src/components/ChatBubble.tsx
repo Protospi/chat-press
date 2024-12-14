@@ -3,10 +3,14 @@ import React from 'react';
 interface ChatBubbleProps {
   message: string;
   isUser: boolean;
+  fontSize?: number;
 }
 
-export const ChatBubble: React.FC<ChatBubbleProps> = ({ message, isUser }) => {
-  // Function to preserve line breaks and spaces
+export const ChatBubble: React.FC<ChatBubbleProps> = ({ 
+  message, 
+  isUser, 
+  fontSize = 14
+}) => {
   const formatMessage = (text: string) => {
     return text.split('\n').map((line, i) => (
       <React.Fragment key={i}>
@@ -25,7 +29,12 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({ message, isUser }) => {
             : 'bg-white rounded-tl-none'
         } shadow-[0_2px_4px_rgba(0,0,0,0.3)]`}
       >
-        <p className="text-[#303030] text-sm flex items-center [:where(.gif-rendering)_&]:-mt-4">{formatMessage(message)}</p>
+        <p 
+          className="text-[#303030] flex items-center [:where(.gif-rendering)_&]:-mt-4"
+          style={{ fontSize: `${fontSize}px` }}
+        >
+          {formatMessage(message)}
+        </p>
       </div>
     </div>
   );
