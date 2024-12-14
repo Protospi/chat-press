@@ -25,7 +25,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ avatarUrl, name }) => {
             <Bot className="text-white" size={24} />
           )}
         </div>
-        <h1 className="text-lg font-semibold">{name}</h1>
+        <h1 className="text-lg font-semibold leading-6 [.gif-rendering_&]:-mt-5">{name}</h1>
       </div>
     </div>
   );

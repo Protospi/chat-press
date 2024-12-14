@@ -55,6 +55,10 @@ function App() {
     setIsGeneratingGif(true);
 
     try {
+      await document.fonts.ready;
+      
+      phoneRef.current.classList.add('gif-rendering');
+      
       const frames: string[] = [];
       const messagesContainer = messagesContainerRef.current;
       
@@ -69,7 +73,7 @@ function App() {
         
         const canvas = await html2canvas(phoneRef.current!, {
           backgroundColor: gifBackground,
-          scale: 2,
+          scale: 3,
           logging: false,
           useCORS: true
         });
@@ -99,8 +103,10 @@ function App() {
         }
       });
     } catch (error) {
+      phoneRef.current?.classList.remove('gif-rendering');
       console.error('Error generating GIF:', error);
     } finally {
+      phoneRef.current?.classList.remove('gif-rendering');
       setIsGeneratingGif(false);
     }
   };
@@ -114,7 +120,7 @@ function App() {
           alt="SmartTalks Logo" 
           className="h-8 object-contain self-start"
         />
-        <h1 className="text-2xl font-semibold text-gray-800">Vizualizador de Conversas</h1>
+        <h1 className="text-2xl font-semibold text-gray-800">Apresentador de Conversas</h1>
         <div className="space-y-6">
           <h3 className="text-xl font-semibold text-gray-800">Configurações do Chat</h3>
           <div>
@@ -211,7 +217,6 @@ function App() {
               <Plus size={24} />
             </button>
             <div className="flex-1 bg-[#2a2a2a] rounded-full h-9 px-4 flex items-center">
-              <span className="text-gray-500 text-sm">Mensagem</span>
             </div>
             <button className="p-2 text-gray-400">
               <Camera size={24} />
