@@ -5,9 +5,10 @@ import { NameInput } from './components/NameInput';
 import { ChatHeader } from './components/ChatHeader';
 import { AvatarInput } from './components/AvatarInput';
 import { DownloadButton } from './components/DownloadButton';
-import { Trash2, Download, Film, Plus, Camera, Mic } from 'lucide-react';
+import { Trash2, Download, Film, Plus, Camera, Mic, Palette } from 'lucide-react';
 import * as gifshot from 'gifshot';
 import html2canvas from 'html2canvas';
+import { ColorPickerModal } from './components/ColorPickerModal';
 
 interface Message {
   text: string;
@@ -21,6 +22,8 @@ function App() {
   const phoneRef = useRef<HTMLDivElement>(null);
   const [isGeneratingGif, setIsGeneratingGif] = useState(false);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [gifBackground, setGifBackground] = useState('#ffffff');
+  const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
 
   const handleAssistantMessage = (text: string) => {
     setMessages([...messages, { text, isUser: false }]);
@@ -65,7 +68,7 @@ function App() {
         await delay(2000);
         
         const canvas = await html2canvas(phoneRef.current!, {
-          backgroundColor: 'rgba(0, 0, 0, 0)', // Explicit transparent background
+          backgroundColor: gifBackground,
           scale: 2,
           logging: false,
           useCORS: true
@@ -154,6 +157,14 @@ function App() {
         <div className="flex gap-4">
           <DownloadButton phoneRef={phoneRef} />
           <button
+            onClick={() => setIsColorPickerOpen(true)}
+            className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+            title="Cor do fundo"
+          >
+            <Palette size={24} />
+            Cor do Fundo
+          </button>
+          <button
             onClick={handleCreateGif}
             disabled={isGeneratingGif}
             className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -216,6 +227,13 @@ function App() {
           </div>
         </div>
       </div>
+
+      <ColorPickerModal
+        isOpen={isColorPickerOpen}
+        onClose={() => setIsColorPickerOpen(false)}
+        onColorSelect={setGifBackground}
+        currentColor={gifBackground}
+      />
     </div>
   );
 }
