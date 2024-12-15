@@ -97,6 +97,14 @@ function App() {
         
         await delay((messageDelay / 10) * 1000);
 
+        const hiddenMessagesContainer = hiddenPhoneRef.current!.querySelector('.messages-container');
+        
+        if (hiddenMessagesContainer) {
+          hiddenMessagesContainer.scrollTop = hiddenMessagesContainer.scrollHeight;
+          
+          await delay(100);
+        }
+
         const canvas = await html2canvas(hiddenPhoneRef.current!, {
           backgroundColor: gifBackground,
           scale: 3,

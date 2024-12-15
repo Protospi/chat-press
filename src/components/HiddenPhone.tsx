@@ -61,7 +61,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
       />
 
       <div 
-        className="h-[calc(100%-160px)] overflow-y-auto p-4"
+        className="h-[calc(100%-160px)] messages-container overflow-y-auto p-4"
         style={{
           background: chatBackground.startsWith('url') 
             ? `${chatBackground} center/cover no-repeat`
