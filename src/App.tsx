@@ -32,6 +32,8 @@ function App() {
   const [currentStep, setCurrentStep] = useState('Preparando...');
   const [progress, setProgress] = useState(0);
   const hiddenPhoneRef = useRef<HTMLDivElement>(null);
+  const [messageDelay, setMessageDelay] = useState(1);
+  const [frameDuration, setFrameDuration] = useState(1);
 
   const TOTAL_STEPS = (messages: Message[]) => messages.length + 1;
   const FRAME_WEIGHT = 0.8;
@@ -80,7 +82,7 @@ function App() {
         
         setMessages(currentMessages);
         
-        await delay(100);
+        await delay((messageDelay / 10) * 1000);
 
         const canvas = await html2canvas(hiddenPhoneRef.current!, {
           backgroundColor: gifBackground,
@@ -103,11 +105,11 @@ function App() {
           images: frames,
           gifWidth: 380 * 4,
           gifHeight: 780 * 4,
-          interval: 1.5,
+          interval: messageDelay,
           transparent: true,
           quality: 20,
           numWorkers: 2,
-          frameDuration: 1.5,
+          frameDuration: frameDuration,
           sampleInterval: 10,
           progressCallback: (captureProgress: number) => {
             const gifProgress = (FRAME_WEIGHT + (captureProgress * GIF_WEIGHT)) * 100;
@@ -181,26 +183,6 @@ function App() {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-semibold text-gray-800">Controle de Mensagens</h3>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Tamanho da Fonte:</span>
-                <div className="flex items-center bg-white rounded-lg border border-gray-300 shadow-sm">
-                  <button
-                    onClick={() => handleFontSizeChange(-1)}
-                    className="px-2 py-1 hover:bg-gray-100 border-r border-gray-300"
-                    title="Diminuir fonte"
-                  >
-                    ↓
-                  </button>
-                  <span className="px-2 min-w-[2rem] text-center">{fontSize}</span>
-                  <button
-                    onClick={() => handleFontSizeChange(1)}
-                    className="px-2 py-1 hover:bg-gray-100 border-l border-gray-300"
-                    title="Aumentar fonte"
-                  >
-                    ↑
-                  </button>
-                </div>
-              </div>
             </div>
             <div className="space-y-4">
               <div>
@@ -218,6 +200,55 @@ function App() {
                   placeholder="Digite como usuário..."
                   align="left"
                 />
+              </div>
+
+              <div className="flex items-center gap-6 pt-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">Tempo entre mensagens:</span>
+                  <select
+                    value={messageDelay}
+                    onChange={(e) => setMessageDelay(Number(e.target.value))}
+                    className="bg-white rounded-lg border border-gray-300 shadow-sm px-2 py-1"
+                  >
+                    <option value={1}>1 segundo</option>
+                    <option value={2}>2 segundos</option>
+                    <option value={3}>3 segundos</option>
+                  </select>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">Duração dos frames:</span>
+                  <select
+                    value={frameDuration}
+                    onChange={(e) => setFrameDuration(Number(e.target.value))}
+                    className="bg-white rounded-lg border border-gray-300 shadow-sm px-2 py-1"
+                  >
+                    <option value={1}>1 segundo</option>
+                    <option value={2}>2 segundos</option>
+                    <option value={3}>3 segundos</option>
+                  </select>
+                </div>
+                
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">Tamanho da Fonte:</span>
+                  <div className="flex items-center bg-white rounded-lg border border-gray-300 shadow-sm">
+                    <button
+                      onClick={() => handleFontSizeChange(-1)}
+                      className="px-2 py-1 hover:bg-gray-100 border-r border-gray-300"
+                      title="Diminuir fonte"
+                    >
+                      ↓
+                    </button>
+                    <span className="px-2 min-w-[2rem] text-center">{fontSize}</span>
+                    <button
+                      onClick={() => handleFontSizeChange(1)}
+                      className="px-2 py-1 hover:bg-gray-100 border-l border-gray-300"
+                      title="Aumentar fonte"
+                    >
+                      ↑
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
