@@ -5,12 +5,13 @@ import { NameInput } from './components/NameInput';
 import { ChatHeader } from './components/ChatHeader';
 import { AvatarInput } from './components/AvatarInput';
 import { DownloadButton } from './components/DownloadButton';
-import { Trash2, Download, Film, Plus, Camera, Mic, Palette, Battery, Signal, Wifi } from 'lucide-react';
+import { Trash2, Download, Film, Plus, Camera, Mic, Palette, Battery, Signal, Wifi, Image } from 'lucide-react';
 import * as gifshot from 'gifshot';
 import html2canvas from 'html2canvas';
 import { ColorPickerModal } from './components/ColorPickerModal';
 import { ProgressBar } from './components/ProgressBar';
 import { HiddenPhone } from './components/HiddenPhone';
+import { BackgroundSelectorModal } from './components/BackgroundSelectorModal';
 
 interface Message {
   text: string;
@@ -42,6 +43,8 @@ function App() {
   const [userTextColor, setUserTextColor] = useState('#303030');
   const [isUserBubbleColorPickerOpen, setIsUserBubbleColorPickerOpen] = useState(false);
   const [isUserTextColorPickerOpen, setIsUserTextColorPickerOpen] = useState(false);
+  const [chatBackground, setChatBackground] = useState('#e5ddd5');
+  const [isBackgroundSelectorOpen, setIsBackgroundSelectorOpen] = useState(false);
 
   const TOTAL_STEPS = (messages: Message[]) => messages.length + 1;
   const FRAME_WEIGHT = 0.8;
@@ -175,15 +178,23 @@ function App() {
                     placeholder="Nome do Assistente"
                   />
                   <AvatarInput onAvatarChange={setAvatarUrl} />
+                  <button
+                    onClick={() => setIsBackgroundSelectorOpen(true)}
+                    className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+                    title="Plano de fundo do chat"
+                  >
+                    <Image size={20} />
+                    Fundo do Chat
+                  </button>
+                  <button
+                    onClick={() => setIsHeaderColorPickerOpen(true)}
+                    className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+                    title="Cor do cabeçalho"
+                  >
+                    <Palette size={20} />
+                    Fundo do Assistente
+                  </button>
                 </div>
-                <button
-                  onClick={() => setIsHeaderColorPickerOpen(true)}
-                  className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
-                  title="Cor do cabeçalho"
-                >
-                  <Palette size={20} />
-                  Fundo do Assistente
-                </button>
               </div>
             </div>
           </div>
@@ -383,7 +394,12 @@ function App() {
             {/* Messages Container - reduced height to create more black space above input */}
             <div 
               ref={messagesContainerRef}
-              className="h-[calc(100%-160px)] overflow-y-auto p-4 bg-[#e5ddd5]"
+              className="h-[calc(100%-160px)] overflow-y-auto p-4"
+              style={{
+                background: chatBackground.startsWith('url') 
+                  ? `${chatBackground} center/cover no-repeat`
+                  : chatBackground
+              }}
             >
               <div className="max-w-[380px] mx-auto">
                 {messages.map((msg, index) => (
@@ -440,6 +456,8 @@ function App() {
           // User colors
           userBubbleColor={userBubbleColor}
           userTextColor={userTextColor}
+          // Add the missing chatBackground prop
+          chatBackground={chatBackground}
         />
       </div>
 
@@ -483,6 +501,13 @@ function App() {
         onClose={() => setIsUserTextColorPickerOpen(false)}
         onColorSelect={setUserTextColor}
         currentColor={userTextColor}
+      />
+
+      <BackgroundSelectorModal
+        isOpen={isBackgroundSelectorOpen}
+        onClose={() => setIsBackgroundSelectorOpen(false)}
+        onSelect={setChatBackground}
+        currentBackground={chatBackground}
       />
     </div>
   );

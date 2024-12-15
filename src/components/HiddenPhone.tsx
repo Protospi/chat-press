@@ -15,6 +15,7 @@ interface HiddenPhoneProps {
   // User colors
   userBubbleColor?: string;
   userTextColor?: string;
+  chatBackground: string;
 }
 
 export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
@@ -26,7 +27,8 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
   bubbleColor,
   textColor,
   userBubbleColor,
-  userTextColor
+  userTextColor,
+  chatBackground
 }, ref) => {
   return (
     <div 
@@ -54,7 +56,14 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
         backgroundColor={headerColor}
       />
 
-      <div className="h-[calc(100%-160px)] overflow-y-auto p-4 bg-[#e5ddd5]">
+      <div 
+        className="h-[calc(100%-160px)] overflow-y-auto p-4"
+        style={{
+          background: chatBackground.startsWith('url') 
+            ? `${chatBackground} center/cover no-repeat`
+            : chatBackground
+        }}
+      >
         <div className="max-w-[380px] mx-auto">
           {messages.map((msg, index) => (
             <ChatBubble

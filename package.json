@@ -10,14 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/gif.js": "^0.2.4",
     "gif-encoder": "^0.7.2",
+    "gif.js": "^0.2.0",
     "gifshot": "^0.4.5",
     "html2canvas": "^1.4.1",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "gif.js": "^0.2.0",
-    "@types/gif.js": "^0.2.4"
+    "react-colorful": "^5.6.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
