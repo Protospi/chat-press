@@ -34,6 +34,14 @@ function App() {
   const hiddenPhoneRef = useRef<HTMLDivElement>(null);
   const [messageDelay, setMessageDelay] = useState(1);
   const [frameDuration, setFrameDuration] = useState(1);
+  const [assistantBubbleColor, setAssistantBubbleColor] = useState('#ffffff');
+  const [assistantTextColor, setAssistantTextColor] = useState('#303030');
+  const [isBubbleColorPickerOpen, setIsBubbleColorPickerOpen] = useState(false);
+  const [isTextColorPickerOpen, setIsTextColorPickerOpen] = useState(false);
+  const [userBubbleColor, setUserBubbleColor] = useState('#DCF8C6');
+  const [userTextColor, setUserTextColor] = useState('#303030');
+  const [isUserBubbleColorPickerOpen, setIsUserBubbleColorPickerOpen] = useState(false);
+  const [isUserTextColorPickerOpen, setIsUserTextColorPickerOpen] = useState(false);
 
   const TOTAL_STEPS = (messages: Message[]) => messages.length + 1;
   const FRAME_WEIGHT = 0.8;
@@ -187,19 +195,71 @@ function App() {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Assistente</label>
-                <MessageInput
-                  onSend={handleAssistantMessage}
-                  placeholder={`Digite como ${assistantName}...`}
-                  align="left"
-                />
+                <div className="flex gap-4">
+                  <div className="flex-1 max-w-[60%]">
+                    <MessageInput
+                      onSend={handleAssistantMessage}
+                      placeholder={`Digite como ${assistantName}...`}
+                      align="left"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Balão</span>
+                      <button
+                        onClick={() => setIsBubbleColorPickerOpen(true)}
+                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300"
+                        title="Cor do balão"
+                      >
+                        <div className="w-6 h-6 rounded-full border border-gray-300" style={{ backgroundColor: assistantBubbleColor }} />
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Texto</span>
+                      <button
+                        onClick={() => setIsTextColorPickerOpen(true)}
+                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300"
+                        title="Cor do texto"
+                      >
+                        <div className="w-6 h-6 rounded-full border border-gray-300" style={{ backgroundColor: assistantTextColor }} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Usuário</label>
-                <MessageInput
-                  onSend={handleUserMessage}
-                  placeholder="Digite como usuário..."
-                  align="left"
-                />
+                <div className="flex gap-4">
+                  <div className="flex-1 max-w-[60%]">
+                    <MessageInput
+                      onSend={handleUserMessage}
+                      placeholder="Digite como usuário..."
+                      align="left"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Balão</span>
+                      <button
+                        onClick={() => setIsUserBubbleColorPickerOpen(true)}
+                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300"
+                        title="Cor do balão"
+                      >
+                        <div className="w-6 h-6 rounded-full border border-gray-300" style={{ backgroundColor: userBubbleColor }} />
+                      </button>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-gray-600">Texto</span>
+                      <button
+                        onClick={() => setIsUserTextColorPickerOpen(true)}
+                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-gray-300"
+                        title="Cor do texto"
+                      >
+                        <div className="w-6 h-6 rounded-full border border-gray-300" style={{ backgroundColor: userTextColor }} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="flex items-center gap-6 pt-4">
@@ -332,6 +392,8 @@ function App() {
                     message={msg.text}
                     isUser={msg.isUser}
                     fontSize={fontSize}
+                    bubbleColor={msg.isUser ? userBubbleColor : assistantBubbleColor}
+                    textColor={msg.isUser ? userTextColor : assistantTextColor}
                   />
                 ))}
               </div>
@@ -372,6 +434,12 @@ function App() {
           avatarUrl={avatarUrl}
           headerColor={headerColor}
           fontSize={fontSize}
+          // Assistant colors
+          bubbleColor={assistantBubbleColor}
+          textColor={assistantTextColor}
+          // User colors
+          userBubbleColor={userBubbleColor}
+          userTextColor={userTextColor}
         />
       </div>
 
@@ -387,6 +455,34 @@ function App() {
         onClose={() => setIsColorPickerOpen(false)}
         onColorSelect={setGifBackground}
         currentColor={gifBackground}
+      />
+
+      <ColorPickerModal
+        isOpen={isBubbleColorPickerOpen}
+        onClose={() => setIsBubbleColorPickerOpen(false)}
+        onColorSelect={setAssistantBubbleColor}
+        currentColor={assistantBubbleColor}
+      />
+
+      <ColorPickerModal
+        isOpen={isTextColorPickerOpen}
+        onClose={() => setIsTextColorPickerOpen(false)}
+        onColorSelect={setAssistantTextColor}
+        currentColor={assistantTextColor}
+      />
+
+      <ColorPickerModal
+        isOpen={isUserBubbleColorPickerOpen}
+        onClose={() => setIsUserBubbleColorPickerOpen(false)}
+        onColorSelect={setUserBubbleColor}
+        currentColor={userBubbleColor}
+      />
+
+      <ColorPickerModal
+        isOpen={isUserTextColorPickerOpen}
+        onClose={() => setIsUserTextColorPickerOpen(false)}
+        onColorSelect={setUserTextColor}
+        currentColor={userTextColor}
       />
     </div>
   );

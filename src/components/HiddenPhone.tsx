@@ -9,6 +9,12 @@ interface HiddenPhoneProps {
   avatarUrl: string | null;
   headerColor: string;
   fontSize: number;
+  // Assistant colors
+  bubbleColor?: string;
+  textColor?: string;
+  // User colors
+  userBubbleColor?: string;
+  userTextColor?: string;
 }
 
 export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
@@ -16,7 +22,11 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
   assistantName,
   avatarUrl,
   headerColor,
-  fontSize
+  fontSize,
+  bubbleColor,
+  textColor,
+  userBubbleColor,
+  userTextColor
 }, ref) => {
   return (
     <div 
@@ -52,6 +62,8 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
               message={msg.text}
               isUser={msg.isUser}
               fontSize={fontSize}
+              bubbleColor={msg.isUser ? userBubbleColor : bubbleColor}
+              textColor={msg.isUser ? userTextColor : textColor}
             />
           ))}
         </div>
