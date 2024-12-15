@@ -16,6 +16,8 @@ interface HiddenPhoneProps {
   userBubbleColor?: string;
   userTextColor?: string;
   chatBackground: string;
+  selectedHour: string;
+  selectedMinute: string;
 }
 
 export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
@@ -28,7 +30,9 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
   textColor,
   userBubbleColor,
   userTextColor,
-  chatBackground
+  chatBackground,
+  selectedHour,
+  selectedMinute
 }, ref) => {
   return (
     <div 
@@ -39,7 +43,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
       <div className="relative">
         <div className="absolute top-2 left-0 right-0 px-6 flex justify-between items-center z-10">
           <div className="text-white text-[15px] font-medium w-[40px] ml-4">
-            23:00
+            {selectedHour}:{selectedMinute}
           </div>
           <div className="flex items-center gap-2 translate-y-2 mr-3">
             <Signal size={17} className="text-white fill-white" />

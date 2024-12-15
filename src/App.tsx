@@ -45,6 +45,8 @@ function App() {
   const [isUserTextColorPickerOpen, setIsUserTextColorPickerOpen] = useState(false);
   const [chatBackground, setChatBackground] = useState('#e5ddd5');
   const [isBackgroundSelectorOpen, setIsBackgroundSelectorOpen] = useState(false);
+  const [selectedHour, setSelectedHour] = useState('23');
+  const [selectedMinute, setSelectedMinute] = useState('00');
 
   const TOTAL_STEPS = (messages: Message[]) => messages.length + 1;
   const FRAME_WEIGHT = 0.8;
@@ -201,7 +203,33 @@ function App() {
 
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <h3 className="text-xl font-semibold text-gray-800">Controle de Mensagens</h3>
+              <h3 className="text-xl font-semibold text-gray-800">Controle da Conversa</h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-gray-600">Hora:</label>
+                  <select
+                    value={selectedHour}
+                    onChange={(e) => setSelectedHour(e.target.value)}
+                    className="bg-white rounded-lg border border-gray-300 shadow-sm px-2 py-1"
+                  >
+                    {Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')).map((hour) => (
+                      <option key={hour} value={hour}>{hour}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex items-center gap-2">
+                  <label className="text-sm text-gray-600">Minutos:</label>
+                  <select
+                    value={selectedMinute}
+                    onChange={(e) => setSelectedMinute(e.target.value)}
+                    className="bg-white rounded-lg border border-gray-300 shadow-sm px-2 py-1"
+                  >
+                    {Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0')).map((minute) => (
+                      <option key={minute} value={minute}>{minute}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
             <div className="space-y-4">
               <div>
@@ -370,7 +398,7 @@ function App() {
               <div className={`absolute ${isGeneratingGif ? 'top-2' : 'top-4'} left-0 right-0 px-6 flex justify-between items-center z-10`}>
                 {/* Time */}
                 <div className="text-white text-[15px] font-medium w-[40px] ml-4">
-                  23:00
+                  {selectedHour}:{selectedMinute}
                 </div>
                 
                 {/* Right Icons */}
@@ -450,14 +478,13 @@ function App() {
           avatarUrl={avatarUrl}
           headerColor={headerColor}
           fontSize={fontSize}
-          // Assistant colors
           bubbleColor={assistantBubbleColor}
           textColor={assistantTextColor}
-          // User colors
           userBubbleColor={userBubbleColor}
           userTextColor={userTextColor}
-          // Add the missing chatBackground prop
           chatBackground={chatBackground}
+          selectedHour={selectedHour}
+          selectedMinute={selectedMinute}
         />
       </div>
 
