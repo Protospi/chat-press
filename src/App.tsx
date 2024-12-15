@@ -196,7 +196,7 @@ function App() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Assistente</label>
                 <div className="flex gap-4">
-                  <div className="flex-1 max-w-[60%]">
+                  <div className="flex-1 max-w-[75%]">
                     <MessageInput
                       onSend={handleAssistantMessage}
                       placeholder={`Digite como ${assistantName}...`}
@@ -230,7 +230,7 @@ function App() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Mensagem do Usuário</label>
                 <div className="flex gap-4">
-                  <div className="flex-1 max-w-[60%]">
+                  <div className="flex-1 max-w-[75%]">
                     <MessageInput
                       onSend={handleUserMessage}
                       placeholder="Digite como usuário..."
