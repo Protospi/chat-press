@@ -9,6 +9,8 @@ import { Trash2, Download, Film, Plus, Camera, Mic, Palette, Battery, Signal, Wi
 import * as gifshot from 'gifshot';
 import html2canvas from 'html2canvas';
 import { ColorPickerModal } from './components/ColorPickerModal';
+import { ProgressBar } from './components/ProgressBar';
+import { HiddenPhone } from './components/HiddenPhone';
 
 interface Message {
   text: string;
@@ -27,6 +29,9 @@ function App() {
   const [gifBackground, setGifBackground] = useState('#ffffff');
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
   const [fontSize, setFontSize] = useState(18);
+  const [currentStep, setCurrentStep] = useState('Preparando...');
+  const [progress, setProgress] = useState(0);
+  const hiddenPhoneRef = useRef<HTMLDivElement>(null);
 
   const handleAssistantMessage = (text: string) => {
     setMessages([...messages, { text, isUser: false }]);
@@ -54,39 +59,40 @@ function App() {
   };
 
   const handleCreateGif = async () => {
-    if (!phoneRef.current || isGeneratingGif) return;
+    if (!hiddenPhoneRef.current || isGeneratingGif) return;
     setIsGeneratingGif(true);
+    setProgress(0);
+    setCurrentStep('Preparando frames...');
 
     try {
       await document.fonts.ready;
       
-      phoneRef.current.classList.add('gif-rendering');
-      
       const frames: string[] = [];
-      const messagesContainer = messagesContainerRef.current;
+      const totalSteps = messages.length;
+      let currentMessages: Message[] = [];
       
-      setMessages([]);
-
       for (let i = 0; i < messages.length; i++) {
-        setMessages(prev => [...prev, messages[i]]);
+        currentMessages = [...currentMessages, messages[i]];
         
-        await delay(2000);
+        setMessages(currentMessages);
         
-        if (messagesContainer) {
-          messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
         await delay(100);
 
-        const canvas = await html2canvas(phoneRef.current!, {
+        const canvas = await html2canvas(hiddenPhoneRef.current!, {
           backgroundColor: gifBackground,
           scale: 3,
           logging: false,
           useCORS: true
         });
+        
         frames.push(canvas.toDataURL('image/png', 1.0));
+        
+        setProgress(((i + 1) / totalSteps) * 100);
+        setCurrentStep(`Gerando frame ${i + 1} de ${totalSteps}`);
       }
 
+      setCurrentStep('Criando GIF...');
+      
       (gifshot as any).createGIF({
         images: frames,
         gifWidth: 380 * 4,
@@ -106,11 +112,11 @@ function App() {
         }
       });
     } catch (error) {
-      phoneRef.current?.classList.remove('gif-rendering');
       console.error('Error generating GIF:', error);
     } finally {
-      phoneRef.current?.classList.remove('gif-rendering');
       setIsGeneratingGif(false);
+      setProgress(0);
+      setCurrentStep('');
     }
   };
 
@@ -225,76 +231,96 @@ function App() {
 
       {/* Right Column - Phone Preview */}
       <div className="w-1/2 p-8 flex items-center justify-center">
-        <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-[#151515] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#151515]">
-          {/* iPhone Status Bar and Notch */}
-          <div className="relative">
-            {/* Status Bar */}
-            <div className={`absolute ${isGeneratingGif ? 'top-2' : 'top-4'} left-0 right-0 px-6 flex justify-between items-center z-10`}>
-              {/* Time */}
-              <div className="text-white text-[15px] font-medium w-[40px] ml-4">
-                23:00
+        {isGeneratingGif ? (
+          <div className="w-full max-w-md">
+            <ProgressBar 
+              progress={progress} 
+              total={100} 
+              currentStep={currentStep} 
+            />
+          </div>
+        ) : (
+          <div ref={phoneRef} className="relative w-[380px] h-[780px] bg-[#151515] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#151515]">
+            {/* iPhone Status Bar and Notch */}
+            <div className="relative">
+              {/* Status Bar */}
+              <div className={`absolute ${isGeneratingGif ? 'top-2' : 'top-4'} left-0 right-0 px-6 flex justify-between items-center z-10`}>
+                {/* Time */}
+                <div className="text-white text-[15px] font-medium w-[40px] ml-4">
+                  23:00
+                </div>
+                
+                {/* Right Icons */}
+                <div className={`flex items-center gap-2 ${isGeneratingGif ? 'translate-y-2' : 'translate-y-0'} mr-3`}>
+                  <Signal size={17} className="text-white fill-white" />
+                  <Wifi size={17} className="text-white fill-white" />
+                  <Battery size={17} className="text-white fill-white" />
+                </div>
               </div>
               
-              {/* Right Icons */}
-              <div className={`flex items-center gap-2 ${isGeneratingGif ? 'translate-y-2' : 'translate-y-0'} mr-3`}>
-                <Signal size={17} className="text-white fill-white" />
-                <Wifi size={17} className="text-white fill-white" />
-                <Battery size={17} className="text-white fill-white" />
-              </div>
+              {/* Notch */}
+              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
             </div>
             
-            {/* Notch */}
-            <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
-          </div>
-          
-          <ChatHeader 
-            avatarUrl={avatarUrl} 
-            name={assistantName} 
-            backgroundColor={headerColor}
-          />
+            <ChatHeader 
+              avatarUrl={avatarUrl} 
+              name={assistantName} 
+              backgroundColor={headerColor}
+            />
 
-          {/* Messages Container - reduced height to create more black space above input */}
-          <div 
-            ref={messagesContainerRef}
-            className="h-[calc(100%-160px)] overflow-y-auto p-4 bg-[#e5ddd5]"
-          >
-            <div className="max-w-[380px] mx-auto">
-              {messages.map((msg, index) => (
-                <ChatBubble
-                  key={index}
-                  message={msg.text}
-                  isUser={msg.isUser}
-                  fontSize={fontSize}
+            {/* Messages Container - reduced height to create more black space above input */}
+            <div 
+              ref={messagesContainerRef}
+              className="h-[calc(100%-160px)] overflow-y-auto p-4 bg-[#e5ddd5]"
+            >
+              <div className="max-w-[380px] mx-auto">
+                {messages.map((msg, index) => (
+                  <ChatBubble
+                    key={index}
+                    message={msg.text}
+                    isUser={msg.isUser}
+                    fontSize={fontSize}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Static Input Bar - adjusted bottom position */}
+            <div className="absolute bottom-[12px] left-0 right-0 h-[50px] bg-[#151515] px-2 py-1 flex items-center gap-1">
+              <button className="p-2 text-gray-400">
+                <Plus size={24} />
+              </button>
+              <div className="flex-1 bg-white rounded-full h-9 px-4 flex items-center justify-center">
+                <img 
+                  src="/smarttalks_logo.png" 
+                  alt="SmartTalks Logo" 
+                  className="h-5 object-contain"
                 />
-              ))}
+              </div>
+              <button className="p-2 text-gray-400">
+                <Camera size={24} />
+              </button>
+              <button className="p-2 text-gray-400">
+                <Mic size={24} />
+              </button>
+            </div>
+
+            {/* iPhone Home Indicator - adjusted height */}
+            <div className="absolute bottom-0 left-0 right-0 h-[12px] bg-[#151515] flex items-center justify-center">
+              <div className="w-[134px] h-[5px] bg-gray-200 rounded-full"></div>
             </div>
           </div>
+        )}
 
-          {/* Static Input Bar - adjusted bottom position */}
-          <div className="absolute bottom-[12px] left-0 right-0 h-[50px] bg-[#151515] px-2 py-1 flex items-center gap-1">
-            <button className="p-2 text-gray-400">
-              <Plus size={24} />
-            </button>
-            <div className="flex-1 bg-white rounded-full h-9 px-4 flex items-center justify-center">
-              <img 
-                src="/smarttalks_logo.png" 
-                alt="SmartTalks Logo" 
-                className="h-5 object-contain"
-              />
-            </div>
-            <button className="p-2 text-gray-400">
-              <Camera size={24} />
-            </button>
-            <button className="p-2 text-gray-400">
-              <Mic size={24} />
-            </button>
-          </div>
-
-          {/* iPhone Home Indicator - adjusted height */}
-          <div className="absolute bottom-0 left-0 right-0 h-[12px] bg-[#151515] flex items-center justify-center">
-            <div className="w-[134px] h-[5px] bg-gray-200 rounded-full"></div>
-          </div>
-        </div>
+        {/* Hidden phone for GIF generation */}
+        <HiddenPhone
+          ref={hiddenPhoneRef}
+          messages={messages}
+          assistantName={assistantName}
+          avatarUrl={avatarUrl}
+          headerColor={headerColor}
+          fontSize={fontSize}
+        />
       </div>
 
       <ColorPickerModal
