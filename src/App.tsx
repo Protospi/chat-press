@@ -33,6 +33,10 @@ function App() {
   const [progress, setProgress] = useState(0);
   const hiddenPhoneRef = useRef<HTMLDivElement>(null);
 
+  const TOTAL_STEPS = (messages: Message[]) => messages.length + 1;
+  const FRAME_WEIGHT = 0.8;
+  const GIF_WEIGHT = 0.2;
+
   const handleAssistantMessage = (text: string) => {
     setMessages([...messages, { text, isUser: false }]);
   };
@@ -68,7 +72,7 @@ function App() {
       await document.fonts.ready;
       
       const frames: string[] = [];
-      const totalSteps = messages.length;
+      const totalFrames = messages.length;
       let currentMessages: Message[] = [];
       
       for (let i = 0; i < messages.length; i++) {
@@ -87,30 +91,47 @@ function App() {
         
         frames.push(canvas.toDataURL('image/png', 1.0));
         
-        setProgress(((i + 1) / totalSteps) * 100);
-        setCurrentStep(`Gerando frame ${i + 1} de ${totalSteps}`);
+        const frameProgress = ((i + 1) / totalFrames) * FRAME_WEIGHT * 100;
+        setProgress(frameProgress);
+        setCurrentStep(`Gerando frame ${i + 1} de ${totalFrames}`);
       }
 
       setCurrentStep('Criando GIF...');
       
-      (gifshot as any).createGIF({
-        images: frames,
-        gifWidth: 380 * 4,
-        gifHeight: 780 * 4,
-        interval: 1.5,
-        transparent: true,
-        quality: 20,
-        numWorkers: 2,
-        frameDuration: 1.5,
-        sampleInterval: 10
-      }, function(obj: { error: boolean; image: string }) {
-        if (!obj.error) {
-          const link = document.createElement('a');
-          link.href = obj.image;
-          link.download = 'chat-animation.gif';
-          link.click();
-        }
+      await new Promise<void>((resolve, reject) => {
+        (gifshot as any).createGIF({
+          images: frames,
+          gifWidth: 380 * 4,
+          gifHeight: 780 * 4,
+          interval: 1.5,
+          transparent: true,
+          quality: 20,
+          numWorkers: 2,
+          frameDuration: 1.5,
+          sampleInterval: 10,
+          progressCallback: (captureProgress: number) => {
+            const gifProgress = (FRAME_WEIGHT + (captureProgress * GIF_WEIGHT)) * 100;
+            setProgress(gifProgress);
+          }
+        }, function(obj: { error: boolean; image: string }) {
+          if (!obj.error) {
+            setProgress(100);
+            setCurrentStep('Baixando GIF...');
+            
+            const link = document.createElement('a');
+            link.href = obj.image;
+            link.download = 'chat-animation.gif';
+            link.click();
+            
+            setTimeout(() => {
+              resolve();
+            }, 1000);
+          } else {
+            reject(new Error('Failed to generate GIF'));
+          }
+        });
       });
+
     } catch (error) {
       console.error('Error generating GIF:', error);
     } finally {
