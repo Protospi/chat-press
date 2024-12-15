@@ -182,7 +182,7 @@ function App() {
                   title="Cor do cabeçalho"
                 >
                   <Palette size={20} />
-                  Cor do Assistente
+                  Fundo do Assistente
                 </button>
               </div>
             </div>
@@ -321,7 +321,7 @@ function App() {
               title="Cor do fundo"
             >
               <Palette size={24} />
-              Cor do Fundo
+              Fundo do GIF
             </button>
             <button
               onClick={handleCreateGif}
