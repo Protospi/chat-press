@@ -247,6 +247,13 @@ function App() {
                     ))}
                   </select>
                 </div>
+                <button
+                  onClick={handleCleanChat}
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  title="Limpar conversa"
+                >
+                  <Trash2 size={24} className="text-[#6D5BEE] hover:text-[#5646db]" />
+                </button>
               </div>
             </div>
             <div className="space-y-4">
@@ -387,12 +394,6 @@ function App() {
             >
               <Film size={24} />
               {isGeneratingGif ? 'Gerando...' : 'Baixar GIF'}
-            </button>
-            <button
-              onClick={handleCleanChat}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <Trash2 size={24} className="text-[#6D5BEE] hover:text-[#5646db]" />
             </button>
           </div>
         </div>
