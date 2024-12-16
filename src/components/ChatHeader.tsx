@@ -1,52 +1,51 @@
 import React from 'react';
-import { ChevronLeft, Phone, Video } from 'lucide-react';
+import { User, Phone, Video, ChevronLeft } from 'lucide-react';
 
 interface ChatHeaderProps {
   avatarUrl: string | null;
   name: string;
-  backgroundColor: string;
+  backgroundColor?: string;
   isHidden?: boolean;
 }
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ 
   avatarUrl, 
   name, 
-  backgroundColor,
+  backgroundColor = '#075e54',
   isHidden = false 
 }) => {
   return (
-    <div style={{ backgroundColor }}>
+    <div 
+      className="flex flex-col" 
+      style={{ backgroundColor }}
+    >
+      {/* Empty space for notch area */}
       <div className="h-[40px]"></div>
       
-      <div className="h-[60px] flex items-center px-2 gap-1">
-        <button className="text-white p-1 -ml-1">
-          <ChevronLeft size={26} />
-        </button>
-        
-        <div className="flex items-center gap-2 flex-1 -ml-1">
-          {avatarUrl ? (
-            <img
-              src={avatarUrl}
-              alt="Avatar"
-              className="w-10 h-10 rounded-full object-cover"
-            />
-          ) : (
-            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-              <span className="text-gray-600 text-xl">
-                {name.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
-          <span className={`text-white font-medium text-lg ${isHidden ? '-mt-5' : ''}`}>{name}</span>
+      {/* User info row with action icons */}
+      <div className="flex items-center justify-between px-4 py-2">
+        <div className="flex items-center gap-3">
+          <ChevronLeft className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-300">
+            {avatarUrl ? (
+              <img 
+                src={avatarUrl} 
+                alt={name} 
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <User className="w-6 h-6 text-gray-600" />
+            )}
+          </div>
+          <div className={`flex items-center ${isHidden ? '-mt-3' : ''}`}>
+            <span className="text-white font-medium">{name}</span>
+          </div>
         </div>
-
-        <div className="flex items-center gap-4 mr-2">
-          <button className="text-white p-1">
-            <Video size={24} />
-          </button>
-          <button className="text-white p-1">
-            <Phone size={24} />
-          </button>
+        
+        {/* Action icons */}
+        <div className="flex items-center gap-4">
+          <Video className="w-6 h-6 text-white" />
+          <Phone className="w-6 h-6 text-white" />
         </div>
       </div>
     </div>
