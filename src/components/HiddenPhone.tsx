@@ -18,6 +18,7 @@ interface HiddenPhoneProps {
   chatBackground: string;
   selectedHour: string;
   selectedMinute: string;
+  inputBarColor: string;
 }
 
 export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
@@ -32,12 +33,13 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
   userTextColor,
   chatBackground,
   selectedHour,
-  selectedMinute
+  selectedMinute,
+  inputBarColor
 }, ref) => {
   return (
     <div 
       ref={ref} 
-      className="fixed left-[-9999px] w-[380px] h-[780px] bg-[#151515] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#151515] gif-rendering"
+      className="fixed left-[-9999px] w-[380px] h-[780px] bg-[#343232] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#343232] gif-rendering"
     >
       {/* Status Bar */}
       <div className="relative">
@@ -51,7 +53,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
             <Battery size={17} className="text-white fill-white" />
           </div>
         </div>
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#343232] rounded-[20px] z-20"></div>
       </div>
 
       <ChatHeader 
@@ -61,7 +63,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
       />
 
       <div 
-        className="h-[calc(100%-160px)] messages-container overflow-y-auto p-4"
+        className="h-[calc(100%-158px)] messages-container overflow-y-auto p-4"
         style={{
           background: chatBackground.startsWith('url') 
             ? `${chatBackground} center/cover no-repeat`
@@ -83,7 +85,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
       </div>
 
       {/* Input Bar */}
-      <div className="absolute bottom-[12px] left-0 right-0 h-[50px] bg-[#151515] px-2 py-1 flex items-center gap-1">
+      <div className="absolute bottom-[12px] left-0 right-0 h-[50px] px-2 py-1 flex items-center gap-1" style={{ backgroundColor: inputBarColor }}>
         <button className="p-2 text-gray-400">
           <Plus size={24} />
         </button>
@@ -103,7 +105,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
       </div>
 
       {/* Home Indicator */}
-      <div className="absolute bottom-0 left-0 right-0 h-[12px] bg-[#151515] flex items-center justify-center">
+      <div className="absolute bottom-0 left-0 right-0 h-[12px] flex items-center justify-center" style={{ backgroundColor: inputBarColor }}>
         <div className="w-[134px] h-[5px] bg-gray-200 rounded-full"></div>
       </div>
     </div>

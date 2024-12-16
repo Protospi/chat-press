@@ -47,6 +47,8 @@ function App() {
   const [isBackgroundSelectorOpen, setIsBackgroundSelectorOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState('23');
   const [selectedMinute, setSelectedMinute] = useState('00');
+  const [inputBarColor, setInputBarColor] = useState('#343232');
+  const [isInputBarColorPickerOpen, setIsInputBarColorPickerOpen] = useState(false);
 
   const TOTAL_STEPS = (messages: Message[]) => messages.length + 1;
   const FRAME_WEIGHT = 0.8;
@@ -194,7 +196,7 @@ function App() {
                     title="Plano de fundo do chat"
                   >
                     <Image size={20} />
-                    Fundo do Chat
+                    Chat
                   </button>
                   <button
                     onClick={() => setIsHeaderColorPickerOpen(true)}
@@ -202,7 +204,15 @@ function App() {
                     title="Cor do cabeçalho"
                   >
                     <Palette size={20} />
-                    Fundo do Assistente
+                    Cabeçalho
+                  </button>
+                  <button
+                    onClick={() => setIsInputBarColorPickerOpen(true)}
+                    className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+                    title="Cor da barra de input"
+                  >
+                    <Palette size={20} />
+                    Rodapé
                   </button>
                 </div>
               </div>
@@ -368,7 +378,7 @@ function App() {
               title="Cor do fundo"
             >
               <Palette size={24} />
-              Fundo do GIF
+              GIF
             </button>
             <button
               onClick={handleCreateGif}
@@ -430,7 +440,7 @@ function App() {
             {/* Messages Container - reduced height to create more black space above input */}
             <div 
               ref={messagesContainerRef}
-              className="h-[calc(100%-160px)] overflow-y-auto p-4"
+              className="h-[calc(100%-158px)] overflow-y-auto p-4"
               style={{
                 background: chatBackground.startsWith('url') 
                   ? `${chatBackground} center/cover no-repeat`
@@ -452,7 +462,7 @@ function App() {
             </div>
 
             {/* Static Input Bar - adjusted bottom position */}
-            <div className="absolute bottom-[12px] left-0 right-0 h-[50px] bg-[#151515] px-2 py-1 flex items-center gap-1">
+            <div className="absolute bottom-[12px] left-0 right-0 h-[50px] px-2 py-1 flex items-center gap-1" style={{ backgroundColor: inputBarColor }}>
               <button className="p-2 text-gray-400">
                 <Plus size={24} />
               </button>
@@ -472,7 +482,7 @@ function App() {
             </div>
 
             {/* iPhone Home Indicator - adjusted height */}
-            <div className="absolute bottom-0 left-0 right-0 h-[12px] bg-[#151515] flex items-center justify-center">
+            <div className="absolute bottom-0 left-0 right-0 h-[12px] flex items-center justify-center" style={{ backgroundColor: inputBarColor }}>
               <div className="w-[134px] h-[5px] bg-gray-200 rounded-full"></div>
             </div>
           </div>
@@ -493,6 +503,7 @@ function App() {
           chatBackground={chatBackground}
           selectedHour={selectedHour}
           selectedMinute={selectedMinute}
+          inputBarColor={inputBarColor}
         />
       </div>
 
@@ -543,6 +554,13 @@ function App() {
         onClose={() => setIsBackgroundSelectorOpen(false)}
         onSelect={setChatBackground}
         currentBackground={chatBackground}
+      />
+
+      <ColorPickerModal
+        isOpen={isInputBarColorPickerOpen}
+        onClose={() => setIsInputBarColorPickerOpen(false)}
+        onColorSelect={setInputBarColor}
+        currentColor={inputBarColor}
       />
     </div>
   );
