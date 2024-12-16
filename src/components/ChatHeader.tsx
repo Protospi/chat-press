@@ -38,7 +38,9 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
             )}
           </div>
           <div className={`flex items-center ${isHidden ? '-mt-3' : ''}`}>
-            <span className="text-white font-medium">{name}</span>
+            <div className="flex-1">
+              <h2 className="text-xl font-medium text-white">{name}</h2>
+            </div>
           </div>
         </div>
         
