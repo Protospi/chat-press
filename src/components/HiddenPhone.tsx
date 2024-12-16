@@ -9,10 +9,8 @@ interface HiddenPhoneProps {
   avatarUrl: string | null;
   headerColor: string;
   fontSize: number;
-  // Assistant colors
   bubbleColor?: string;
   textColor?: string;
-  // User colors
   userBubbleColor?: string;
   userTextColor?: string;
   chatBackground: string;
@@ -53,13 +51,14 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
             <Battery size={17} className="text-white fill-white" />
           </div>
         </div>
-        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#343232] rounded-[20px] z-20"></div>
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-[126px] h-[32px] bg-[#151515] rounded-[20px] z-20"></div>
       </div>
 
       <ChatHeader 
         avatarUrl={avatarUrl} 
         name={assistantName} 
         backgroundColor={headerColor}
+        isHidden={true}
       />
 
       <div 

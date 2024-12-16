@@ -1,39 +1,53 @@
 import React from 'react';
-import { Bot } from 'lucide-react';
+import { ChevronLeft, Phone, Video } from 'lucide-react';
 
 interface ChatHeaderProps {
   avatarUrl: string | null;
   name: string;
-  backgroundColor?: string;
+  backgroundColor: string;
+  isHidden?: boolean;
 }
 
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ 
   avatarUrl, 
-  name,
-  backgroundColor = '#128c7e'
+  name, 
+  backgroundColor,
+  isHidden = false 
 }) => {
   return (
-    <div 
-      className="text-white px-4 pt-12 pb-2"
-      style={{ backgroundColor }}
-    >
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-white/10 overflow-hidden flex items-center justify-center">
+    <div style={{ backgroundColor }}>
+      <div className="h-[40px]"></div>
+      
+      <div className="h-[60px] flex items-center px-2 gap-1">
+        <button className="text-white p-1 -ml-1">
+          <ChevronLeft size={26} />
+        </button>
+        
+        <div className="flex items-center gap-2 flex-1 -ml-1">
           {avatarUrl ? (
-            <img 
-              src={avatarUrl} 
-              alt={name} 
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = '';
-                e.currentTarget.parentElement!.innerHTML = '<Bot className="text-white" size={24} />';
-              }}
+            <img
+              src={avatarUrl}
+              alt="Avatar"
+              className="w-10 h-10 rounded-full object-cover"
             />
           ) : (
-            <Bot className="text-white" size={24} />
+            <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+              <span className="text-gray-600 text-xl">
+                {name.charAt(0).toUpperCase()}
+              </span>
+            </div>
           )}
+          <span className={`text-white font-medium text-lg ${isHidden ? '-mt-5' : ''}`}>{name}</span>
         </div>
-        <h1 className="text-lg font-semibold leading-6 [.gif-rendering_&]:-mt-5">{name}</h1>
+
+        <div className="flex items-center gap-4 mr-2">
+          <button className="text-white p-1">
+            <Video size={24} />
+          </button>
+          <button className="text-white p-1">
+            <Phone size={24} />
+          </button>
+        </div>
       </div>
     </div>
   );
