@@ -39,7 +39,7 @@ export const HiddenPhone = forwardRef<HTMLDivElement, HiddenPhoneProps>(({
   return (
     <div 
       ref={ref} 
-      className="fixed left-[-9999px] w-[380px] h-[780px] bg-[#343232] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#343232] gif-rendering"
+      className="fixed left-[-9999px] w-[380px] h-[780px] bg-[#151515] rounded-[55px] shadow-xl overflow-hidden border-8 border-[#151515] gif-rendering"
     >
       {/* Status Bar */}
       <div className="relative">

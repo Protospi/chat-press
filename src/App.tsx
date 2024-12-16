@@ -43,7 +43,7 @@ function App() {
   const [userTextColor, setUserTextColor] = useState('#303030');
   const [isUserBubbleColorPickerOpen, setIsUserBubbleColorPickerOpen] = useState(false);
   const [isUserTextColorPickerOpen, setIsUserTextColorPickerOpen] = useState(false);
-  const [chatBackground, setChatBackground] = useState('#e5ddd5');
+  const [chatBackground, setChatBackground] = useState('url("/backgrounds/Whatsapp_2.png")');
   const [isBackgroundSelectorOpen, setIsBackgroundSelectorOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState('23');
   const [selectedMinute, setSelectedMinute] = useState('00');
@@ -220,7 +220,7 @@ function App() {
           </div>
 
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
               <h3 className="text-xl font-semibold text-gray-800">Controle da Conversa</h3>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
