@@ -16,10 +16,10 @@ export const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
   if (!isOpen) return null;
 
   const predefinedColors = [
-    '#128c7e', // WhatsApp light green (default)
     '#008069', // WhatsApp default green
+    '#128c7e', // WhatsApp light green (default)
     '#6D5BEE', // Your purple
-    '#E4405F', // Instagram pink
+    '#DD2A7B', // Instagram pink
     '#075e54', // WhatsApp dark green
     '#128C7E', // WhatsApp secondary green
     '#34B7F1', // WhatsApp blue

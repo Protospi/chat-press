@@ -21,7 +21,7 @@ interface Message {
 function App() {
   const [assistantName, setAssistantName] = useState('Assistente');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [headerColor, setHeaderColor] = useState('#075e54');
+  const [headerColor, setHeaderColor] = useState('#008069');
   const [isHeaderColorPickerOpen, setIsHeaderColorPickerOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const phoneRef = useRef<HTMLDivElement>(null);
@@ -210,39 +210,37 @@ function App() {
               <div className="flex justify-between mb-2">
                 <label className="text-sm font-medium text-gray-700">Nome do Assistente</label>
               </div>
-              <div className="flex gap-1 items-center justify-between">
-                <div className="flex gap-1">
-                  <NameInput
-                    value={assistantName}
-                    onChange={setAssistantName}
-                    placeholder="Nome do Assistente"
-                  />
-                  <AvatarInput onAvatarChange={setAvatarUrl} />
-                  <button
-                    onClick={() => setIsBackgroundSelectorOpen(true)}
-                    className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
-                    title="Plano de fundo do chat"
-                  >
-                    <Image size={20} />
-                    Chat
-                  </button>
-                  <button
-                    onClick={() => setIsHeaderColorPickerOpen(true)}
-                    className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
-                    title="Cor do cabeçalho"
-                  >
-                    <Palette size={20} />
-                    Cabeçalho
-                  </button>
-                  <button
-                    onClick={() => setIsInputBarColorPickerOpen(true)}
-                    className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
-                    title="Cor da barra de input"
-                  >
-                    <Palette size={20} />
-                    Rodapé
-                  </button>
-                </div>
+              <div className="flex gap-1">
+                <NameInput
+                  value={assistantName}
+                  onChange={setAssistantName}
+                  placeholder="Nome do Assistente"
+                />
+                <AvatarInput onAvatarChange={setAvatarUrl} />
+                <button
+                  onClick={() => setIsHeaderColorPickerOpen(true)}
+                  className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+                  title="Cor do cabeçalho"
+                >
+                  <Palette size={20} />
+                  Cabeçalho
+                </button>
+                <button
+                  onClick={() => setIsBackgroundSelectorOpen(true)}
+                  className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+                  title="Plano de fundo do chat"
+                >
+                  <Image size={20} />
+                  Chat
+                </button>
+                <button
+                  onClick={() => setIsInputBarColorPickerOpen(true)}
+                  className="flex items-center gap-2 bg-[#6D5BEE] text-white px-4 py-2 rounded-lg hover:bg-[#5646db] transition-colors"
+                  title="Cor da barra de input"
+                >
+                  <Palette size={20} />
+                  Rodapé
+                </button>
               </div>
             </div>
           </div>

@@ -28,7 +28,8 @@ export function BackgroundSelectorModal({
           'Whatsapp_3.png',
           'Whatsapp_4.jpg',
           'Whatsapp_5.jpg',
-          'Whatsapp_6.jpg'
+          'Whatsapp_6.jpg',
+          'travel_1.png'
         ];
         
         // Filter only existing images
@@ -71,8 +72,8 @@ export function BackgroundSelectorModal({
 
   // Predefined colors similar to WhatsApp themes
   const predefinedColors = [
-    '#e5ddd5', // WhatsApp default
     '#DCF8C6', // WhatsApp light green
+    '#e5ddd5', // WhatsApp default
     '#ffffff', // White
     '#f0f2f5', // Light gray
     '#efffde', // Very light green

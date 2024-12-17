@@ -11,7 +11,7 @@ interface ChatHeaderProps {
 export const ChatHeader: React.FC<ChatHeaderProps> = ({ 
   avatarUrl, 
   name, 
-  backgroundColor = '#075e54',
+  backgroundColor = '#008069',
   isHidden = false 
 }) => {
   return (
@@ -26,7 +26,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
       <div className="flex items-center justify-between px-4 py-2">
         <div className="flex items-center gap-3">
           <ChevronLeft className="w-6 h-6 text-white" />
-          <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gray-300">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
             {avatarUrl ? (
               <img 
                 src={avatarUrl} 
@@ -34,7 +34,9 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
                 className="w-full h-full object-cover"
               />
             ) : (
-              <User className="w-6 h-6 text-gray-600" />
+              <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                <User className="w-6 h-6 text-gray-600" />
+              </div>
             )}
           </div>
           <div className={`flex items-center ${isHidden ? '-mt-3' : ''}`}>
