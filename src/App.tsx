@@ -46,7 +46,7 @@ function App() {
   const [chatBackground, setChatBackground] = useState('url("/backgrounds/Whatsapp_2.png")');
   const [isBackgroundSelectorOpen, setIsBackgroundSelectorOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState('23');
-  const [selectedMinute, setSelectedMinute] = useState('00');
+  const [selectedMinute, setSelectedMinute] = useState('42');
   const [inputBarColor, setInputBarColor] = useState('#343232');
   const [isInputBarColorPickerOpen, setIsInputBarColorPickerOpen] = useState(false);
 
