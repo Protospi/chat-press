@@ -29,7 +29,7 @@ function App() {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const [gifBackground, setGifBackground] = useState('#ffffff');
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
-  const [fontSize, setFontSize] = useState(18);
+  const [fontSize, setFontSize] = useState(22);
   const [currentStep, setCurrentStep] = useState('Preparando...');
   const [progress, setProgress] = useState(0);
   const hiddenPhoneRef = useRef<HTMLDivElement>(null);
@@ -475,17 +475,17 @@ function App() {
                 {/* iPhone Status Bar and Notch */}
                 <div className="relative">
                   {/* Status Bar */}
-                  <div className={`absolute ${isGeneratingGif ? 'top-2' : 'top-4'} left-0 right-0 px-6 flex justify-between items-center z-10`}>
+                  <div className={`absolute ${isGeneratingGif ? 'top-0.5' : 'top-3.5'} left-0 right-0 px-6 flex justify-between items-center z-10`}>
                     {/* Time */}
-                    <div className="text-white text-[15px] font-medium w-[40px] ml-4">
+                    <div className="text-white text-[17px] font-medium w-[40px] ml-4">
                       {selectedHour}:{selectedMinute}
                     </div>
                     
                     {/* Right Icons */}
                     <div className={`flex items-center gap-2 ${isGeneratingGif ? 'translate-y-2' : 'translate-y-0'} mr-3`}>
-                      <Signal size={17} className="text-white fill-white" />
-                      <Wifi size={17} className="text-white fill-white" />
-                      <Battery size={17} className="text-white fill-white" />
+                      <Signal size={19} className="text-white fill-white" />
+                      <Wifi size={19} className="text-white fill-white" />
+                      <Battery size={19} className="text-white fill-white" />
                     </div>
                   </div>
                   
@@ -525,7 +525,7 @@ function App() {
 
                 {/* Static Input Bar - adjusted bottom position */}
                 <div className="absolute bottom-[12px] left-0 right-0 h-[50px] px-2 py-1 flex items-center gap-1" style={{ backgroundColor: inputBarColor }}>
-                  <button className="p-2 text-gray-400">
+                  <button className="p-2 text-gray-300">
                     <Plus size={24} />
                   </button>
                   <div className="flex-1 bg-white rounded-full h-9 px-4 flex items-center justify-center">
@@ -535,10 +535,10 @@ function App() {
                       className="h-5 object-contain"
                     />
                   </div>
-                  <button className="p-2 text-gray-400">
+                  <button className="p-2 text-gray-300">
                     <Camera size={24} />
                   </button>
-                  <button className="p-2 text-gray-400">
+                  <button className="p-2 text-gray-300">
                     <Mic size={24} />
                   </button>
                 </div>
