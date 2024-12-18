@@ -203,7 +203,10 @@ function App() {
       {/* Left Column - Controls */}
       <div className="w-1/2 p-8 flex flex-col">
         <div className="flex-1 flex flex-col gap-8">
-          <h1 className="text-2xl font-semibold text-gray-800">Apresentador de Conversas</h1>
+          <div className="flex items-center gap-2">
+            <img src="smarttalks_ai_logo.jpeg" alt="SmartTalks AI Logo" className="h-11 w-11 object-contain rounded-tl-lg rounded-tr-lg rounded-bl-lg" />
+            <h1 className="text-2xl font-semibold text-gray-800">Smart Gif</h1>
+          </div>
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-gray-800">Configurações do Assistente</h3>
             <div>
